@@ -15,6 +15,10 @@ caloricApp.config(['$routeProvider',
                 templateUrl: 'static/app/partials/index.html',
                 controller: 'IndexCtrl'
             }).
+            when('/signup', {
+               templateUrl: 'static/app/partials/create-account.html',
+                controller: 'SignupCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });

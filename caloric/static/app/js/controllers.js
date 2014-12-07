@@ -9,3 +9,9 @@ caloricControllers.controller('IndexCtrl', ['$scope', '$http',
     function ($scope, $http) {
 
     }]);
+
+
+caloricControllers.controller('SignupCtrl', ['$scope', '$http',
+    function($scope, $http) {
+
+    }]);
