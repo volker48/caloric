@@ -1,3 +1,5 @@
+from sqlalchemy.exc import SQLAlchemyError
+
 __author__ = 'Marcus McCurdy'
 
 
@@ -16,7 +18,7 @@ class ActiveModel(object):
         if commit:
             try:
                 db.session.commit()
-            except:
+            except SQLAlchemyError:
                 db.session.rollback()
             raise
 
