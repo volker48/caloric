@@ -1,2 +1,4 @@
 node_modules/
 caloric.db
+bower_components/
+test.db

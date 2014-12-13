@@ -18,9 +18,9 @@ class ActiveModel(object):
         if commit:
             try:
                 db.session.commit()
-            except SQLAlchemyError:
+            except SQLAlchemyError as exc:
                 db.session.rollback()
-            raise
+                raise exc
 
         return self
 

@@ -1,0 +1,23 @@
+{
+  "name": "marcus-mccurdy",
+  "version": "0.0.1",
+  "authors": [
+    "Marcus McCurdy <marcus.mccurdy@gmail.com>"
+  ],
+  "description": "Calorie counting app",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-lodash": "~0.1.2"
+  }
+}
