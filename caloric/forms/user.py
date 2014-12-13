@@ -5,6 +5,9 @@ from wtforms import StringField, DateTimeField, IntegerField
 from wtforms.validators import DataRequired, Email
 
 
+class UserSettingsForm(Form):
+    daily_calories = IntegerField('daily_calories', validators=(DataRequired(),))
+
 class SignupForm(Form):
     email = StringField('email', validators=(DataRequired(), Email()))
     password = StringField('password', validators=(DataRequired(),))

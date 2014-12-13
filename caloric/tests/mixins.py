@@ -19,6 +19,7 @@ class CaloricTest(TestCase):
 
 
 class RequestContextMixin(object):
+
     def setUp(self):
         super(RequestContextMixin, self).setUp()
         self.ctx = self.app.test_request_context()

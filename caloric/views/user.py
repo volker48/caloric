@@ -1,20 +1,33 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, abort
 from flask.ext.login import login_user
 from flask.views import MethodView
 from sqlalchemy.orm.exc import NoResultFound
 from caloric.models.user import User, bcrypt
-from caloric.forms.user import SignupForm
+from caloric.forms.user import SignupForm, UserSettingsForm
 
 user = Blueprint('user', __name__, url_prefix='/user')
 
 
 class UserApi(MethodView):
 
+    def _base(self, user_id):
+        u = User.query.get(user_id)
+        if not u:
+            abort()
+        return u
+
     def get(self, user_id):
-        pass
+        usr = self._base(user_id)
+        return jsonify(email=usr.email, daily_calories=usr.daily_calories)
 
     def post(self, user_id):
-        pass
+        usr = self._base(user_id)
+        form = UserSettingsForm(data=request.get_json(silent=True))
+        if form.validate():
+            usr.daily_calories = form.daily_calories.data
+            usr.save()
+        else:
+            return jsonify(**form.errors)
 
 
 user.add_url_rule('/<int:user_id>/', view_func=UserApi.as_view('user'))
