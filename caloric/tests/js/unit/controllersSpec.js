@@ -5,7 +5,7 @@ describe('Caloric controllers', function() {
 
     beforeEach(module('caloricApp'));
 
-    describe('LoginCtrl', function(){
+    describe('AuthCtrl', function(){
         var scope, ctrl, $httpBackend;
 
         beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
@@ -14,7 +14,7 @@ describe('Caloric controllers', function() {
                 respond({'success': 1});
 
             scope = $rootScope.$new();
-            ctrl = $controller('LoginCtrl', {$scope: scope});
+            ctrl = $controller('AuthCtrl', {$scope: scope});
         }));
 
         it('should fetch user id from xhr', function() {
