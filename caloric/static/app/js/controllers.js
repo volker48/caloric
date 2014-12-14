@@ -6,12 +6,21 @@ var caloricControllers = angular.module('caloricControllers', []);
 
 
 caloricControllers.controller('IndexCtrl', ['$scope', '$http',
-    function ($scope, $http) {
-        $scope.login = function(email, password) {
+    function ($scope) {
 
-        };
 
     }]);
+
+caloricControllers.controller('LoginCtrl', ['$scope', '$http', '$log',
+function($scope, $http, $log) {
+    $scope.accountData = {};
+    $scope.login = function() {
+        $log.info('Posting to /user/login/');
+        $http.post('/user/login/', $scope.accountData).success(function(data) {
+            $scope.user_id = data.success;
+        });
+    };
+}]);
 
 
 caloricControllers.controller('SignupCtrl', ['$scope', '$http', '$log',
