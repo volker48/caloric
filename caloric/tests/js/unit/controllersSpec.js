@@ -5,26 +5,26 @@ describe('Caloric controllers', function() {
 
     beforeEach(module('caloricApp'));
 
-    describe('AuthCtrl', function(){
-        var scope, ctrl, $httpBackend;
+    describe('AppCtrl', function(){
+        var scope, ctrl, $rootScope, AUTH_EVENTS;
 
-        beforeEach(inject(function(_$httpBackend_, $rootScope, $controller) {
-            $httpBackend = _$httpBackend_;
-            $httpBackend.expectPOST('/user/login/').
-                respond({'success': 1});
-
+        beforeEach(inject(function(_$rootScope_, $controller, _AUTH_EVENTS_) {
+            $rootScope = _$rootScope_;
             scope = $rootScope.$new();
-            ctrl = $controller('AuthCtrl', {$scope: scope});
+            ctrl = $controller('AppCtrl', {$scope: scope});
+            AUTH_EVENTS = _AUTH_EVENTS_;
         }));
 
-        it('should fetch user id from xhr', function() {
-            expect(scope.user_id).toBeUndefined();
+        it('should save currentUser to scope on loginSuccess', function() {
+            expect(scope.currentUser).toBeNull();
 
-            scope.login();
+            $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, {id: 1, email: 'joe@gmail.com'});
 
-            $httpBackend.flush();
+            expect(scope.currentUser).not.toBeNull();
+            expect(scope.currentUser).not.toBeUndefined();
 
-            expect(scope.user_id).toEqual(1);
+            expect(scope.currentUser.id).toEqual(1);
+            expect(scope.currentUser.email).toEqual('joe@gmail.com');
         });
 
 

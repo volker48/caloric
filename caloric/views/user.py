@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, abort
-from flask.ext.login import login_user
+from flask.ext.login import login_user, login_required
 from flask.views import MethodView
 from sqlalchemy.orm.exc import NoResultFound
 from caloric.models.user import User, bcrypt
@@ -9,6 +9,8 @@ user = Blueprint('user', __name__, url_prefix='/user')
 
 
 class UserApi(MethodView):
+
+    decorators = [login_required]
 
     def _base(self, user_id):
         u = User.query.get(user_id)
@@ -45,7 +47,7 @@ class SignIn(MethodView):
                 return jsonify(error='Invalid email/password')
             if bcrypt.check_password_hash(db_user.password, form.password.data):
                 login_user(db_user)
-                return jsonify(success='Logged in')
+                return jsonify(email=db_user.email, id=db_user.id)
             else:
                 return jsonify(error='Invalid email/password')
         else:

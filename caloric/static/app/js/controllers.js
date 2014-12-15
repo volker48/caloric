@@ -1,25 +1,36 @@
 /**
- * Created by marcusmccurdy on 12/6/14.
+ * Created by Marcus McCurdy on 12/6/14.
  */
 
 var caloricControllers = angular.module('caloricControllers', []);
 
 
-caloricControllers.controller('AuthCtrl', ['$scope', '$http', '$log',
-function($scope, $http, $log) {
-    $scope.accountData = {};
+caloricControllers.controller('AppCtrl', ['$scope', 'AUTH_EVENTS',
+    function($scope, AUTH_EVENTS) {
+        $scope.currentUser = null;
 
-    $scope.loginData = {};
+        $scope.setCurrentUser = function(user) {
+            $scope.currentUser = user;
+        };
 
-    $scope.login = function() {
-        $log.info('Posting to /user/login/');
-        $http.post('/user/login/', $scope.loginData).success(function(data) {
-            $scope.user_id = data.success;
+        $scope.$on(AUTH_EVENTS.loginSuccess, function(event, user) {
+            $scope.setCurrentUser(user);
         });
-    };
+    }]);
 
-    $scope.createAccount = function() {
-        $log.info($scope.accountData);
-        $http.post('/user/signup/', $scope.accountData);
-    }
-}]);
+caloricControllers.controller('AuthCtrl', ['$scope', '$http', 'Login',
+
+    function($scope, $http, $log) {
+        $scope.accountData = {username: '', password: ''};
+
+        $scope.loginData = {username: '', password: ''};
+
+        $scope.login = Login.login;
+
+        $scope.createAccount = function(accountData) {
+            $log.info(accountData);
+            $http.post('/user/signup/', accountData);
+        }
+    }]);
+
+

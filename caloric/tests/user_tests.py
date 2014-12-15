@@ -15,7 +15,7 @@ class LoginTests(RequestContextMixin, CaloricTest):
     def valid_login_test(self):
         res = self.json_post(self.url, {'email': 'john@gmail.com', 'password': 'abc123'})
         self.assertEqual(res.status_code, 200)
-        self.assertDictEqual(json.loads(res.data), {'success': 'Logged in'})
+        self.assertDictEqual(json.loads(res.data), {'email': 'john@gmail.com', 'id': 1})
 
     def bad_password_test(self):
         res = self.json_post(self.url, {'email': 'john@gmail.com', 'password': 'badpassword'})
