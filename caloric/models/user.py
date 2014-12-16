@@ -1,5 +1,4 @@
 from flask.ext.bcrypt import Bcrypt
-from flask.ext.login import UserMixin
 from caloric.db import db, ActiveModel
 
 __author__ = 'Marcus McCurdy'
@@ -8,7 +7,7 @@ __author__ = 'Marcus McCurdy'
 bcrypt = Bcrypt()
 
 
-class User(ActiveModel, UserMixin, db.Model):
+class User(ActiveModel, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(254), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)

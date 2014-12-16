@@ -1,6 +1,6 @@
 from flask import Flask
 from caloric import blueprints
-from caloric.auth import login_manager
+from caloric.auth import jwt
 from caloric.db import db
 
 
@@ -16,6 +16,6 @@ def create_app(config=None):
 
     db.init_app(app)
 
-    login_manager.init_app(app)
+    jwt.init_app(app)
 
     return app

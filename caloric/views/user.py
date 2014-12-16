@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify, abort
-from flask.ext.login import login_user, login_required
+from flask.ext.jwt import jwt_required
 from flask.views import MethodView
-from sqlalchemy.orm.exc import NoResultFound
-from caloric.models.user import User, bcrypt
+from caloric.models.user import User
 from caloric.forms.user import SignupForm, UserSettingsForm
 
 user = Blueprint('user', __name__, url_prefix='/user')
@@ -10,7 +9,7 @@ user = Blueprint('user', __name__, url_prefix='/user')
 
 class UserApi(MethodView):
 
-    decorators = [login_required]
+    decorators = [jwt_required()]
 
     def _base(self, user_id):
         u = User.query.get(user_id)
@@ -33,28 +32,6 @@ class UserApi(MethodView):
 
 
 user.add_url_rule('/<int:user_id>/', view_func=UserApi.as_view('user'))
-    
-
-class SignIn(MethodView):
-
-    def post(self):
-        #TODO: Don't like this duplication. This looks too similar to the post method in SignupApi
-        form = SignupForm(data=request.get_json(silent=True))
-        if form.validate():
-            try:
-                db_user = User.query.filter_by(email=form.email.data).one()
-            except NoResultFound:
-                return jsonify(error='Invalid email/password')
-            if bcrypt.check_password_hash(db_user.password, form.password.data):
-                login_user(db_user)
-                return jsonify(email=db_user.email, id=db_user.id)
-            else:
-                return jsonify(error='Invalid email/password')
-        else:
-            return jsonify(**form.errors)
-
-
-user.add_url_rule('/login/', view_func=SignIn.as_view('login'))
 
 
 class SignupApi(MethodView):
