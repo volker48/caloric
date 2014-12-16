@@ -26,7 +26,7 @@ describe('Caloric services', function () {
                 $httpBackend = _$httpBackend_;
                 window = $window;
 
-                $httpBackend.expectPOST('/user/login/', {username: 'joe@gmail.com', password: 'abc123'}).
+                $httpBackend.expectPOST('/auth/', {username: 'joe@gmail.com', password: 'abc123'}).
                     respond({'token': test_token})
             }));
 
