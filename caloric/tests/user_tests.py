@@ -1,8 +1,7 @@
 import json
 from flask import url_for
-from nose.tools import nottest
 from caloric.models.user import User
-from caloric.tests.mixins import CaloricTest, RequestContextMixin
+from caloric.tests.mixins import CaloricTest, RequestContextMixin, LoginMixin
 
 __author__ = 'marcusmccurdy'
 
@@ -28,15 +27,14 @@ class LoginTests(RequestContextMixin, CaloricTest):
         self.assertEqual(res.status_code, 400)
 
 
-class UserApiTests(RequestContextMixin, CaloricTest):
+class UserApiTests(LoginMixin, RequestContextMixin, CaloricTest):
 
-    @nottest
     def get_user_test(self):
-        test_user = User.query.filter_by(email='john@gmail.com').one()
-        url = url_for('user.user', user_id=test_user.id)
-        res = self.test_app.get(url)
+        url = url_for('user.user', user_id=self.user.id)
+        res = self.test_app.get(url, headers=self.headers)
         self.assertEqual(res.status_code, 200)
         loaded = json.loads(res.data)
-        self.assertEqual(test_user.email, loaded['email'])
+        self.assertEqual(self.user.email, loaded['email'])
+        self.assertEqual(self.user.daily_calories, 2000)
 
 
