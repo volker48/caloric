@@ -1,6 +1,5 @@
 import json
 from flask import url_for
-from caloric.models.user import User
 from caloric.tests.mixins import CaloricTest, RequestContextMixin, LoginMixin
 
 __author__ = 'marcusmccurdy'
