@@ -34,3 +34,9 @@ caloricControllers.controller('AuthCtrl', ['$scope', '$http', 'Login',
     }]);
 
 
+caloricControllers.controller('EntryCtrl', ['$scope', 'Entry',
+    function($scope, Entry) {
+
+    }]);
+
+

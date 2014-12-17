@@ -41,4 +41,28 @@ describe('Caloric services', function () {
             });
         });
     });
+
+    describe('Entry', function() {
+        var Entry, $httpBackend;
+
+        beforeEach(inject(function(_Entry_, _$httpBackend_) {
+            Entry = _Entry_;
+            $httpBackend = _$httpBackend_;
+        }));
+
+        it('should GET /entry/', function() {
+           $httpBackend.expectGET('/entry/').respond({entries: [{id: 1, text: 'Steak', calories: 500}, {id: 2, text: 'Eggs', calories: 300}]});
+
+            var entries;
+            Entry.query(function(resp) {
+                entries = resp.entries;
+            });
+
+            $httpBackend.flush();
+
+            expect(entries.length).toEqual(2);
+        });
+
+
+    });
 });

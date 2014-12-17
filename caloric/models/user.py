@@ -11,7 +11,8 @@ class User(ActiveModel, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(254), nullable=False, unique=True)
     password = db.Column(db.String(60), nullable=False)
-    daily_calories = db.Column(db.Integer, nullable=True, default=2000)#TODO: Find out about default for this
+    daily_calories = db.Column(db.Integer, nullable=True, default=2000)
+    entries = db.relationship('Entry', backref=db.backref('user', lazy='joined'))
 
     def __init__(self, email, password, daily_calories=2000):
         self.email = email

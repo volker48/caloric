@@ -5,6 +5,15 @@ var caloricServices = angular.module('caloricServices', ['ngResource']);
 //        return $resource('/users/:id/', {id: '@id'});
 //    }]);
 
+caloricServices.factory('Entry', ['$resource',
+    function EntryFactory($resource){
+        return $resource('/entry/:entryId', {entryId: '@entryId'},
+            {
+                query: {method:'GET', isArray: false}
+            }
+        );
+    }]);
+
 
 caloricServices.factory('Login', ['$http', '$window', '$rootScope', '$log', 'AUTH_EVENTS',
 

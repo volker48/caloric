@@ -2,6 +2,7 @@ import os
 from nose.tools import nottest
 from caloric.app import create_app
 from caloric.db import db
+from caloric.models.entry import Entry
 from caloric.models.user import User
 from caloric.tests import config
 
@@ -26,4 +27,5 @@ def setUp():
 @nottest
 def create_test_users():
     u = User('john@gmail.com', 'abc123')
+    u.entries = [Entry('Steak', 300), Entry('Eggs and bacon', 400)]
     u.save()
