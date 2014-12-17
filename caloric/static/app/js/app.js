@@ -5,6 +5,7 @@
 var caloricApp = angular.module('caloricApp', [
     'ngRoute',
     'ngResource',
+    'daterangepicker',
     'caloricControllers',
     'caloricConstants',
     'caloricServices'
@@ -21,6 +22,10 @@ caloricApp.config(['$routeProvider',
             when('/user/settings/', {
                 templateUrl: 'static/app/partials/settings.html'
 
+            }).
+            when('/entries/', {
+                templateUrl: 'static/app/partials/entries.html',
+                controller: 'EntryCtrl'
             }).
             otherwise({
                 redirectTo: '/'

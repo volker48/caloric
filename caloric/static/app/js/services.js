@@ -5,11 +5,11 @@ var caloricServices = angular.module('caloricServices', ['ngResource']);
 //        return $resource('/users/:id/', {id: '@id'});
 //    }]);
 
-caloricServices.factory('Entry', ['$resource',
-    function EntryFactory($resource){
+caloricServices.factory('Entry', ['$resource', '$window',
+    function EntryFactory($resource, $window){
         return $resource('/entry/:entryId', {entryId: '@entryId'},
             {
-                query: {method:'GET', isArray: false}
+                query: {method:'GET', isArray: false, headers: {Authorization: 'Bearer ' + $window.sessionStorage.token}}
             }
         );
     }]);
@@ -47,7 +47,7 @@ caloricServices.factory('Login', ['$http', '$window', '$rootScope', '$log', 'AUT
         loginService.login = function login(loginData) {
             $log.info('Logging user in...');
 
-            $http.post('/auth/', loginData).success(function(resp) {
+            $http.post('/auth', loginData).success(function(resp) {
                 $window.sessionStorage.token = resp.token;
                 var user = loginService.userFromToken(resp.token);
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);

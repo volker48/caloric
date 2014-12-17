@@ -39,11 +39,11 @@ class SignupApi(MethodView):
     def post(self):
         form = SignupForm(data=request.get_json(silent=True))
         if form.validate():
-            existing_user = User.query.filter_by(email=form.email.data).first()
+            existing_user = User.query.filter_by(email=form.username.data).first()
             if existing_user:
                 data = {'error': 'Email already registered'}
             else:
-                new_user = User(form.email.data, form.password.data)
+                new_user = User(form.username.data, form.password.data)
                 new_user.save()
                 data = {'success': new_user.id}
         else:
