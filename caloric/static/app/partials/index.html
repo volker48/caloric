@@ -18,7 +18,7 @@
         won't be affected by other people using the application.</p>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" ng-hide="currentUser">
       <h2>Sign In</h2>
 
       <form role="form" ng-submit="login(loginData)">
@@ -39,7 +39,7 @@
 
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-4" ng-hide="currentUser">
       <h2>Sign up</h2>
       <form role="form" ng-submit="createAccount(accountData)">
         <div class="form-group">

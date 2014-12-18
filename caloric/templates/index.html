@@ -62,6 +62,10 @@
         <li><a href="#/entries">Entries</a></li>
         <li><a href="#/settings">Settings</a></li>
       </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li ng-show="currentUser"><button type="button" class="btn btn-default navbar-btn" ng-click="logout()">Logout</button>></li>
+      </ul>
     </div>
     <!--/.navbar-collapse -->
   </div>

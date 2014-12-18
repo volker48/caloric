@@ -5,8 +5,8 @@
 var caloricControllers = angular.module('caloricControllers', []);
 
 
-caloricControllers.controller('AppCtrl', ['$scope', 'AUTH_EVENTS', '$log',
-    function($scope, AUTH_EVENTS, $log) {
+caloricControllers.controller('AppCtrl', ['$scope', 'AUTH_EVENTS', '$log', '$window', 'Login', '$location',
+    function($scope, AUTH_EVENTS, $log, $window, Login, $location) {
         $scope.currentUser = null;
 
         $scope.setCurrentUser = function(user) {
@@ -15,9 +15,20 @@ caloricControllers.controller('AppCtrl', ['$scope', 'AUTH_EVENTS', '$log',
             $scope.currentUser = user;
         };
 
+        $scope.logout = Login.logout;
+
         $scope.$on(AUTH_EVENTS.loginSuccess, function(event, user) {
             $scope.setCurrentUser(user);
         });
+
+        $scope.$on(AUTH_EVENTS.logoutSuccess, function() {
+            $scope.setCurrentUser(null);
+            $location.path('/');
+        });
+
+        if ($window.localStorage.token !== undefined) {
+            $scope.currentUser = Login.userFromToken($window.localStorage.token);
+        }
     }]);
 
 caloricControllers.controller('AuthCtrl', ['$scope', '$http', '$log', 'Login', 'AUTH_EVENTS', '$location',

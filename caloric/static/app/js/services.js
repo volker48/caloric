@@ -48,11 +48,18 @@ caloricServices.factory('Login', ['$http', '$window', '$rootScope', '$log', 'AUT
             $log.info('Logging user in...');
 
             $http.post('/auth', loginData).success(function(resp) {
-                $window.sessionStorage.token = resp.token;
+                $window.localStorage.token = resp.token;
                 var user = loginService.userFromToken(resp.token);
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);
+            }).error(function(resp) {
+                $rootScope.$broadcast(AUTH_EVENTS.loginFailure, resp);
             });
 
+        };
+
+        loginService.logout = function logout() {
+            delete($window.localStorage.token);
+            $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
         };
 
         return loginService;
