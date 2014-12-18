@@ -59,6 +59,11 @@ caloricControllers.controller('EntryCtrl', ['$scope', 'Entry', '$log',
             });
         };
 
+        $scope.deleteEntry = function deleteEntry(id) {
+            Entry.delete({entryId: id});
+            $scope.entries = _.filter($scope.entries, function(entry) {return entry.id !== id;});
+        };
+
     }]);
 
 

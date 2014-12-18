@@ -5,6 +5,8 @@
 var caloricApp = angular.module('caloricApp', [
     'ngRoute',
     'ngResource',
+    'ngAnimate',
+    'angular-lodash',
     'daterangepicker',
     'caloricControllers',
     'caloricConstants',

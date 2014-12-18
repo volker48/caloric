@@ -11,15 +11,21 @@ class EntryApi(MethodView):
 
     decorators = [jwt_required()]
 
+    def get_all(self):
+        entries = [{'id': entry.id, 'text': entry.text, 'calories': entry.calories, 'datetime': entry.datetime} for entry in current_user.entries]
+        return jsonify(entries=entries)
+
+    def get_one(self, entry_id):
+        entry = Entry.query.get(entry_id).one()
+        if entry.user_id == current_user.id:
+            return jsonify(entry=entry.to_dict())
+        abort(403)
+
     def get(self, entry_id=None):
         if not entry_id:
-            entries = [{'id': entry.id, 'text': entry.text, 'calories': entry.calories, 'datetime': entry.datetime} for entry in current_user.entries]
-            return jsonify(entries=entries)
+            return self.get_all()
         else:
-            for entry in current_user.entries:
-                if entry.id == entry_id:
-                    return jsonify(entry=entry.to_dict())
-            abort(400)
+            return self.get_one(entry_id)
 
     def create_entry(self):
         form = AddEntryForm(data=request.get_json(silent=True))
@@ -38,10 +44,22 @@ class EntryApi(MethodView):
             return self.create_entry()
 
     def delete(self, entry_id):
-        pass
+        entry = Entry.query.get(entry_id)
+        if entry.user_id == current_user.id:
+            entry.delete()
+            return jsonify(message='success')
+        abort(403)
 
     def update_entry(self, entry_id):
-        pass
+        entry = Entry.query.get(entry_id)
+        if entry.user_id == current_user.id:
+            for k, v in request.get_json(silent=True):
+                if hasattr(entry, k):
+                    setattr(entry, k, v)
+            entry.save()
+            return jsonify(entry=entry)
+        else:
+            abort(403)
 
 
 entry.add_url_rule('/', view_func=EntryApi.as_view('entries'))

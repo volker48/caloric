@@ -31,6 +31,7 @@
           <span>{{ entry.datetime }}</span>
           <span>{{ entry.text }}</span>
           <span>{{ entry.calories }}</span>
+          <span><button class="btn btn-danger" ng-click="deleteEntry(entry.id)">Delete</button></span>
         </li>
       </ul>
     </div>

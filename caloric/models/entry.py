@@ -1,4 +1,3 @@
-import json
 from dateutil.parser import parse
 from caloric.db import db, ActiveModel
 from datetime import datetime as dt
