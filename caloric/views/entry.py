@@ -16,7 +16,7 @@ class EntryApi(MethodView):
         return jsonify(entries=entries)
 
     def get_one(self, entry_id):
-        entry = Entry.query.get(entry_id).one()
+        entry = Entry.query.get(entry_id)
         if entry.user_id == current_user.id:
             return jsonify(entry=entry.to_dict())
         abort(403)
