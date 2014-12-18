@@ -42,7 +42,12 @@ caloricControllers.controller('AuthCtrl', ['$scope', '$http', '$log', 'Login', '
 
         $scope.createAccount = function(accountData) {
             $log.info(accountData);
-            $http.post('/user/signup/', accountData);
+            $http.post('/user/signup/', accountData).success(function(resp) {
+                alertify.success('Signup successful! Please login.');
+                $scope.accountData = {username: '', password: ''}
+            }).error(function() {
+                alertify.error('Could not create your account at this time.');
+            });
         };
 
         $scope.$on(AUTH_EVENTS.loginSuccess, function(event, data) {
@@ -82,4 +87,11 @@ caloricControllers.controller('SettingsCtrl', ['$scope', 'User', '$log',
     function($scope, User, $log) {
         $scope.settings = User.get({userId: $scope.currentUser.id});
 
+        $scope.update = function update(user) {
+            user.$save({userId: $scope.currentUser.id}, function() {
+                alertify.success('Settings updated.');
+            }, function() {
+                alertify.error('Could not save settings.');
+            });
+        };
     }]);
