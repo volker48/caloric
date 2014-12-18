@@ -27,7 +27,7 @@ caloricApp.config(['$routeProvider',
             }).
             when('/entries/', {
                 templateUrl: 'static/app/partials/entries.html',
-                controller: 'EntryCtrl'
+                controller: 'EntriesCtrl'
             }).
             when('/settings/', {
                templateUrl: 'static/app/partials/settings.html',

@@ -37,7 +37,7 @@ describe('Caloric services', function () {
 
                 $httpBackend.flush();
 
-                expect(window.sessionStorage.token).toEqual(test_token);
+                expect(window.localStorage.token).toEqual(test_token);
             });
         });
     });

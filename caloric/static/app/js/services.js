@@ -37,7 +37,6 @@ caloricServices.factory('Login', ['$http', '$window', '$rootScope', '$log', 'AUT
             }
             return window.atob(output);
         };
-
         loginService.userFromToken = function userFromToken(token) {
             var encodedUser = token.split('.')[1];
             return JSON.parse(loginService.urlBase64Decode(encodedUser));
@@ -47,7 +46,7 @@ caloricServices.factory('Login', ['$http', '$window', '$rootScope', '$log', 'AUT
         loginService.login = function login(loginData) {
             $log.info('Logging user in...');
 
-            $http.post('/auth', loginData).success(function(resp) {
+            $http.post('/auth/', loginData).success(function(resp) {
                 $window.localStorage.token = resp.token;
                 var user = loginService.userFromToken(resp.token);
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);

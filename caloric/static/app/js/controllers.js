@@ -57,7 +57,7 @@ caloricControllers.controller('AuthCtrl', ['$scope', '$http', '$log', 'Login', '
     }]);
 
 
-caloricControllers.controller('EntryCtrl', ['$scope', 'Entry', '$log',
+caloricControllers.controller('EntriesCtrl', ['$scope', 'Entry', '$log',
     function($scope, Entry, $log) {
         $scope.newEntry = new Entry({datetime: {startDate: null}});
 
