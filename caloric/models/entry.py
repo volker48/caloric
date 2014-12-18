@@ -24,4 +24,4 @@ class Entry(ActiveModel, db.Model):
         return '<Entry {} {} {}>'.format(self.user.email if self.user else '', self.text, self.calories)
     
     def to_dict(self):
-        return {'id': self.id, 'text': self.text, 'calories': self.calories, 'datetime': self.datetime}
+        return {'id': self.id, 'text': self.text, 'calories': self.calories, 'datetime': self.datetime.isoformat()}

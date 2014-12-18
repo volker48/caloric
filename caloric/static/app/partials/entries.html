@@ -6,7 +6,7 @@
         <div class="form-group">
           <label>
             Date
-            <input class="form-control date-picker" type="text" placeholder="Date" ng-model="newEntry.datetime" options="{timePicker: true, singleDatePicker: true}" date-range-picker>
+            <input class="form-control date-picker" type="text" placeholder="Date" ng-model="newEntry.datetime" options="{timePicker: true, singleDatePicker: true, timeZone: 0}" date-range-picker>
           </label>
         </div>
         <div class="form-group">
@@ -28,7 +28,7 @@
       <h3>Entries</h3>
       <ul class="entries">
         <li ng-repeat="entry in entries">
-          <span>{{ entry.datetime }}</span>
+          <span>{{ entry.datetime | date:'short'}}</span>
           <span>{{ entry.text }}</span>
           <span>{{ entry.calories }}</span>
           <span><button class="btn btn-danger" ng-click="deleteEntry(entry.id)">Delete</button></span>

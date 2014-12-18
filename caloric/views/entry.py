@@ -12,7 +12,7 @@ class EntryApi(MethodView):
     decorators = [jwt_required()]
 
     def get_all(self):
-        entries = [{'id': entry.id, 'text': entry.text, 'calories': entry.calories, 'datetime': entry.datetime} for entry in current_user.entries]
+        entries = [{'id': entry.id, 'text': entry.text, 'calories': entry.calories, 'datetime': entry.datetime.isoformat()} for entry in current_user.entries]
         return jsonify(entries=entries)
 
     def get_one(self, entry_id):
