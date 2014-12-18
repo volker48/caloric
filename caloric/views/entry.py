@@ -52,14 +52,15 @@ class EntryApi(MethodView):
 
     def update_entry(self, entry_id):
         entry = Entry.query.get(entry_id)
-        if entry.user_id == current_user.id:
-            for k, v in request.get_json(silent=True):
-                if hasattr(entry, k):
-                    setattr(entry, k, v)
-            entry.save()
-            return jsonify(entry=entry)
-        else:
+        if entry.user_id != current_user.id:
             abort(403)
+        else:
+            data = request.get_json()
+            entry.text = data['text']
+            entry.calories = data['calories']
+            entry.datetime = data['datetime']
+            entry.save()
+            return jsonify(entry=entry.to_dict())
 
 
 entry.add_url_rule('/', view_func=EntryApi.as_view('entries'))

@@ -36,6 +36,7 @@
           <th>Date</th>
           <th>Text</th>
           <th>Calories</th>
+          <th>Edit</th>
           <th>Delete</th>
         </tr>
         <tbody>
@@ -44,11 +45,43 @@
           <td>{{ entry.text }}</td>
           <td>{{ entry.calories }}</td>
           <td>
+            <button class="btn btn-primary" ng-click="editEntry(entry)">Edit</button>
+          </td>
+          <td>
             <button class="btn btn-danger" ng-click="deleteEntry(entry.id)">Delete</button>
           </td>
         </tr>
         </tbody>
       </table>
+    </div>
+    <div class="col-md-4" ng-show="editingEntry">
+      <h3>Edit Entry</h3>
+      <form ng-submit="saveEdit(editingEntry)">
+        <div class="form-group">
+          <label>
+            Date
+          </label>
+          <input class="form-control date-picker" type="text" placeholder="Date" ng-model="editingEntry.datetime"
+                 options="{timePicker: true, singleDatePicker: true, timeZone: 0, timePickerIncrement: 5}" date-range-picker>
+
+        </div>
+        <div class="form-group">
+          <label>
+            Text
+          </label>
+          <input class="form-control" type="text" placeholder="Text" ng-model="editingEntry.text">
+
+        </div>
+        <div class="form-group">
+          <label>
+            Calories
+          </label>
+          <input class="form-control" type="number" placeholder="Calories" ng-model="editingEntry.calories">
+
+        </div>
+        <button type="submit" class="btn btn-warning">Update</button>
+        <button type="reset" class="btn btn-primary" ng-click="cancelEdit()">Cancel</button>
+      </form>
     </div>
   </div>
 </div>
