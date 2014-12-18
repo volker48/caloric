@@ -24,3 +24,13 @@ class ActiveModel(object):
 
         return self
 
+    def delete(self, commit=True):
+        db.session.delete(self)
+
+        if commit:
+            try:
+                db.session.commit()
+            except SQLAlchemyError as exc:
+                db.session.rollback()
+                raise exc
+
