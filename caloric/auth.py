@@ -12,7 +12,7 @@ def load_user(payload):
 
 @jwt.payload_handler
 def payload_handler(user):
-    return dict(id=user.id, email=user.email)
+    return dict(id=user.id, email=user.email, daily_calories=user.daily_calories)
 
 
 @jwt.authentication_handler

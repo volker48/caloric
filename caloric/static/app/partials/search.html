@@ -27,8 +27,8 @@
         </tr>
         <tbody>
         <tr ng-repeat="day in days" class="repeated-item">
-          <td>{{ day[0] | date:'short'}}</td>
-          <td>{{ day[1] }}</td>
+          <td>{{ day[0] | date:'shortDate'}}</td>
+          <td class="calories" ng-class="{danger: (day[1] > currentUser.daily_calories), success: (day[1] <= currentUser.daily_calories)}">{{ day[1] }}</td>
         </tr>
         </tbody>
       </table>

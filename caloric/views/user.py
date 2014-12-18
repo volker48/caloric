@@ -21,7 +21,7 @@ class UserApi(MethodView):
 
     def get(self, user_id):
         usr = self._base(user_id)
-        return jsonify(email=usr.email, daily_calories=usr.daily_calories)
+        return jsonify(id=usr.id, email=usr.email, daily_calories=usr.daily_calories)
 
     def post(self, user_id):
         usr = self._base(user_id)
@@ -29,7 +29,7 @@ class UserApi(MethodView):
         if form.validate():
             usr.daily_calories = form.daily_calories.data
             usr.save()
-            return jsonify(email=usr.email, daily_calories=usr.daily_calories)
+            return jsonify(id=usr.id, email=usr.email, daily_calories=usr.daily_calories)
         else:
             return jsonify(**form.errors)
 

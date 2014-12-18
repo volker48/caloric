@@ -78,7 +78,7 @@ class EntrySearch(MethodView):
         startDate = parse(request.args['startDate']).replace(tzinfo=None)
         endDate = parse(request.args['endDate']).replace(tzinfo=None)
         results = []
-        for row in db.session.execute("SELECT _datetime, SUM(calories) FROM entry WHERE _datetime BETWEEN :startDate AND :endDate GROUP BY _datetime", dict(startDate=startDate, endDate=endDate)):
+        for row in db.session.execute("SELECT DATE(_datetime) AS _datetime, SUM(calories) FROM entry WHERE _datetime BETWEEN :startDate AND :endDate GROUP BY DATE(_datetime)", dict(startDate=startDate, endDate=endDate)):
             dt = parse(row[0]).replace(tzinfo=None).isoformat()
             results.append((dt, row[1]))
         return jsonify(results=results)
