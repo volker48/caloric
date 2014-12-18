@@ -1,9 +1,9 @@
 var caloricServices = angular.module('caloricServices', ['ngResource']);
 
-//caloricServices.factory('User', ['$resource',
-//    function($resource) {
-//        return $resource('/users/:id/', {id: '@id'});
-//    }]);
+caloricServices.factory('User', ['$resource',
+    function($resource) {
+        return $resource('/user/:userId/', {userId: '@id'});
+    }]);
 
 caloricServices.factory('Entry', ['$resource',
     function EntryFactory($resource){

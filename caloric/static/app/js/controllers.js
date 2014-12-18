@@ -67,3 +67,8 @@ caloricControllers.controller('EntryCtrl', ['$scope', 'Entry', '$log',
     }]);
 
 
+caloricControllers.controller('SettingsCtrl', ['$scope', 'User', '$log',
+    function($scope, User, $log) {
+        $scope.settings = User.get({userId: $scope.currentUser.id});
+
+    }]);

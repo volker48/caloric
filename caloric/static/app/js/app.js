@@ -29,6 +29,10 @@ caloricApp.config(['$routeProvider',
                 templateUrl: 'static/app/partials/entries.html',
                 controller: 'EntryCtrl'
             }).
+            when('/settings/', {
+               templateUrl: 'static/app/partials/settings.html',
+                controller: 'SettingsCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });

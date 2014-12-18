@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, abort
-from flask.ext.jwt import jwt_required
+from flask.ext.jwt import jwt_required, current_user
 from flask.views import MethodView
 from caloric.models.user import User
 from caloric.forms.user import SignupForm, UserSettingsForm
@@ -12,9 +12,11 @@ class UserApi(MethodView):
     decorators = [jwt_required()]
 
     def _base(self, user_id):
+        if user_id != current_user.id:
+            abort(403)
         u = User.query.get(user_id)
         if not u:
-            abort()
+            abort(400)
         return u
 
     def get(self, user_id):
@@ -27,6 +29,7 @@ class UserApi(MethodView):
         if form.validate():
             usr.daily_calories = form.daily_calories.data
             usr.save()
+            return jsonify(email=usr.email, daily_calories=usr.daily_calories)
         else:
             return jsonify(**form.errors)
 
