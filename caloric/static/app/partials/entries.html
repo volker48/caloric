@@ -2,11 +2,11 @@
   <div class="row">
     <div class="col-md-4">
       <h3>Add a new entry</h3>
-      <form ng-submit="newEntry.$save()">
+      <form ng-submit="saveEntry(newEntry)">
         <div class="form-group">
           <label>
             Date
-            <input class="form-control date-picker" type="text" placeholder="Date" ng-model="date" options="{timePicker: true}">
+            <input class="form-control date-picker" type="text" placeholder="Date" ng-model="newEntry.datetime" options="{timePicker: true, singleDatePicker: true}" date-range-picker>
           </label>
         </div>
         <div class="form-group">
@@ -24,7 +24,7 @@
         <button type="submit" class="btn btn-primary">Save</button>
       </form>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" ng-if="entries.length">
       <h3>Entries</h3>
       <ul class="entries">
         <li ng-repeat="entry in entries">

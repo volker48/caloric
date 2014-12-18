@@ -9,7 +9,7 @@ caloricServices.factory('Entry', ['$resource', '$window',
     function EntryFactory($resource, $window){
         return $resource('/entry/:entryId', {entryId: '@entryId'},
             {
-                query: {method:'GET', isArray: false, headers: {Authorization: 'Bearer ' + $window.sessionStorage.token}}
+                query: {method:'GET', isArray: false}
             }
         );
     }]);

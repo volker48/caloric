@@ -1,3 +1,5 @@
+import json
+from dateutil.parser import parse
 from caloric.db import db, ActiveModel
 from datetime import datetime as dt
 
@@ -13,6 +15,8 @@ class Entry(ActiveModel, db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, text, calories, datetime=dt.now()):
+        if type(datetime) in (dict,):
+            datetime = parse(datetime['startDate'])
         self.datetime = datetime
         self.text = text
         self.calories = calories

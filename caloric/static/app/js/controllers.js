@@ -43,9 +43,7 @@ caloricControllers.controller('AuthCtrl', ['$scope', '$http', '$log', 'Login', '
 
 caloricControllers.controller('EntryCtrl', ['$scope', 'Entry', '$log',
     function($scope, Entry, $log) {
-        $scope.newEntry = new Entry();
-
-        $scope.date = {startDate: null, endDate: null};
+        $scope.newEntry = new Entry({datetime: {startDate: null}});
 
         $scope.entries = [];
 
@@ -53,14 +51,11 @@ caloricControllers.controller('EntryCtrl', ['$scope', 'Entry', '$log',
             $scope.entries = resp.entries;
         });
 
-        $scope.saveEntry = function(newEntry) {
-            newEntry.datetime = $scope.date;
-            newEntry.$save().success(function(resp) {
-                $scope.newEntry = new Entry();
-                $scope.date = {startDate: null, endDate: null};
+        $scope.saveEntry = function saveEntry(newEntry) {
+            newEntry.$save(function(resp) {
+                $log.info('New Entry ' + resp.entry);
+                $scope.newEntry = new Entry({datetime: {startDate: null}});
                 $scope.entries.push(resp.entry);
-            }).error(function(resp) {
-
             });
         };
 

@@ -1,6 +1,8 @@
-from flask import Blueprint, jsonify, abort
+from flask import Blueprint, jsonify, abort, request
 from flask.ext.jwt import jwt_required, current_user
 from flask.views import MethodView
+from caloric.forms.entry import AddEntryForm
+from caloric.models.entry import Entry
 
 entry = Blueprint('entry', __name__, url_prefix='/entry')
 
@@ -19,10 +21,26 @@ class EntryApi(MethodView):
                     return jsonify(entry=entry.to_dict())
             abort(400)
 
+    def create_entry(self):
+        form = AddEntryForm(data=request.get_json(silent=True))
+        if not form.validate():
+            return jsonify(**form.errors)
+        else:
+            new_entry = Entry(form.text.data, form.calories.data, form.datetime.data)
+            new_entry.user_id = current_user.id
+            new_entry.save()
+            return jsonify(entry=new_entry.to_dict())
+
     def post(self, entry_id=None):
-        pass
+        if entry_id:
+            return self.update_entry(entry_id)
+        else:
+            return self.create_entry()
 
     def delete(self, entry_id):
+        pass
+
+    def update_entry(self, entry_id):
         pass
 
 
