@@ -1,6 +1,9 @@
+from dateutil.parser import parse
 from flask import Blueprint, jsonify, abort, request
 from flask.ext.jwt import jwt_required, current_user
 from flask.views import MethodView
+from sqlalchemy import func
+from caloric.db import db
 from caloric.forms.entry import AddEntryForm
 from caloric.models.entry import Entry
 
@@ -65,3 +68,20 @@ class EntryApi(MethodView):
 
 entry.add_url_rule('/', view_func=EntryApi.as_view('entries'))
 entry.add_url_rule('/<int:entry_id>/', view_func=EntryApi.as_view('entry'))
+
+
+class EntrySearch(MethodView):
+
+    decorators = [jwt_required()]
+
+    def get(self):
+        startDate = parse(request.args['startDate']).replace(tzinfo=None)
+        endDate = parse(request.args['endDate']).replace(tzinfo=None)
+        results = []
+        for row in db.session.execute("SELECT _datetime, SUM(calories) FROM entry WHERE _datetime BETWEEN :startDate AND :endDate GROUP BY _datetime", dict(startDate=startDate, endDate=endDate)):
+            dt = parse(row[0]).replace(tzinfo=None).isoformat()
+            results.append((dt, row[1]))
+        return jsonify(results=results)
+
+
+entry.add_url_rule('/search/', view_func=EntrySearch.as_view('search'))

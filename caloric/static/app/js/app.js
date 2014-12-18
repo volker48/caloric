@@ -33,6 +33,10 @@ caloricApp.config(['$routeProvider',
                templateUrl: 'static/app/partials/settings.html',
                 controller: 'SettingsCtrl'
             }).
+            when('/search/', {
+                templateUrl: 'static/app/partials/search.html',
+                controller: 'SearchCtrl'
+            }).
             otherwise({
                 redirectTo: '/'
             });

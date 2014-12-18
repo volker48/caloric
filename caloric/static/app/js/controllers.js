@@ -115,3 +115,20 @@ caloricControllers.controller('SettingsCtrl', ['$scope', 'User', '$log',
             });
         };
     }]);
+
+
+caloricControllers.controller('SearchCtrl', ['$scope', '$http', '$log',
+    function($scope, $http, $log) {
+        $scope.searchRange = {startDate: null, endDate: null};
+
+
+        $scope.search = function(searchRange) {
+            $http.get('/entry/search/', {params: {startDate: searchRange.startDate, endDate: searchRange.endDate}}).success(function(resp) {
+                $log.info(resp);
+                $scope.days = resp.results;
+            }).error(function() {
+                alertify.error('Could not search at this time :(');
+            });
+        };
+
+    }]);
