@@ -1,12 +1,12 @@
 var caloricServices = angular.module('caloricServices', ['ngResource']);
 
 caloricServices.factory('User', ['$resource',
-    function($resource) {
+    function UserFactory($resource) {
         return $resource('/user/:userId/', {userId: '@id'});
     }]);
 
 caloricServices.factory('Entry', ['$resource',
-    function EntryFactory($resource){
+    function EntryFactory($resource) {
         return $resource('/entry/:entryId/', {entryId: '@id'},
             {
                 query: {method:'GET', isArray: false}
@@ -37,6 +37,7 @@ caloricServices.factory('Login', ['$http', '$window', '$rootScope', '$log', 'AUT
             }
             return window.atob(output);
         };
+
         loginService.userFromToken = function userFromToken(token) {
             var encodedUser = token.split('.')[1];
             return JSON.parse(loginService.urlBase64Decode(encodedUser));

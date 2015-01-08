@@ -74,12 +74,18 @@ caloricControllers.controller('EntriesCtrl', ['$scope', 'Entry', '$log',
                 var dt = moment().utc();
                 $scope.newEntry = new Entry({datetime: {startDate: dt, endDate: dt}});
                 $scope.entries.push(resp.entry);
+            }, function() {
+                alertify.error('Could not save entry!');
             });
         };
 
         $scope.deleteEntry = function deleteEntry(id) {
-            Entry.delete({entryId: id});
-            $scope.entries = _.filter($scope.entries, function(entry) {return entry.id !== id;});
+            Entry.delete({entryId: id}, function(resp) {
+                $scope.entries = _.filter($scope.entries, function(entry) {return entry.id !== id;});
+            }, function() {
+                alertify.error('Could not delete entry');
+            });
+
         };
 
         $scope.editEntry = function editEntry(entry) {
@@ -108,7 +114,9 @@ caloricControllers.controller('SettingsCtrl', ['$scope', 'User', '$log',
         $scope.settings = User.get({userId: $scope.currentUser.id});
 
         $scope.update = function update(user) {
-            user.$save({userId: $scope.currentUser.id}, function() {
+            user.$save({userId: $scope.currentUser.id}, function(resp) {
+                $scope.currentUser.email = resp.email;
+                $scope.currentUser.daily_calories = resp.daily_calories;
                 alertify.success('Settings updated.');
             }, function() {
                 alertify.error('Could not save settings.');
@@ -119,7 +127,9 @@ caloricControllers.controller('SettingsCtrl', ['$scope', 'User', '$log',
 
 caloricControllers.controller('SearchCtrl', ['$scope', '$http', '$log',
     function($scope, $http, $log) {
-        $scope.searchRange = {startDate: null, endDate: null};
+        $scope.searchRange = {startDate: moment().utc(), endDate: moment().utc()};
+
+        $scope.dateRangeOptions = {timePicker: true, timeZone: 0, timePickerIncrement: 5};
 
 
         $scope.search = function(searchRange) {

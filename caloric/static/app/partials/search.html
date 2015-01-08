@@ -8,9 +8,7 @@
           <label>
             Date
           </label>
-          <input class="form-control date-picker" type="text" placeholder="Date" ng-model="searchRange"
-                 options="{timePicker: true, timeZone: 0, timePickerIncrement: 5}"
-                 date-range-picker>
+          <input class="form-control date-picker" type="text" ng-model="searchRange" options="dateRangeOptions" date-range-picker>
 
         </div>
         <button type="submit" class="btn btn-primary">Search</button>
