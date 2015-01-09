@@ -6,6 +6,7 @@ __author__ = 'Marcus McCurdy'
 
 index = Blueprint('index', __name__)
 
+
 class IndexView(MethodView):
 
     def get(self):

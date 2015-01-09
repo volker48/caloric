@@ -17,7 +17,7 @@
   <script src="{{ url_for('static', filename='js/angular-lodash.js') }}"></script>
   <script src="{{ url_for('static', filename='js/angular-animate.min.js') }}"></script>
   <!-- Bootstrap -->
-  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/daterangepicker-bs3.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/alertify.core.css') }}" rel="stylesheet">
   <link href="{{ url_for('static', filename='css/alertify.bootstrap.css') }}" rel="stylesheet">
@@ -64,12 +64,12 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav" ng-show="currentUser !== null">
         <li><a href="#/entries">Entries</a></li>
-        <li><a href="#/settings">Settings</a></li>
         <li><a href="#/search">Search</a></li>
+        <li><a href="#/settings">Settings</a></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-        <li ng-show="currentUser"><button type="button" class="btn btn-default navbar-btn" ng-click="logout()">Logout</button>></li>
+        <li ng-show="currentUser"><button type="button" class="btn btn-default navbar-btn" ng-click="logout()">Logout</button></li>
       </ul>
     </div>
     <!--/.navbar-collapse -->

@@ -2,7 +2,6 @@ from dateutil.parser import parse
 from flask import Blueprint, jsonify, abort, request
 from flask.ext.jwt import jwt_required, current_user
 from flask.views import MethodView
-from sqlalchemy import func
 from caloric.db import db
 from caloric.forms.entry import AddEntryForm
 from caloric.models.entry import Entry
