@@ -8,7 +8,7 @@ var caloricApp = angular.module('caloricApp', [
     'ngAnimate',
     'angular-lodash',
     'daterangepicker',
-    'caloricControllers',
+    'caloric.controllers',
     'caloricConstants',
     'caloricServices'
 ]);

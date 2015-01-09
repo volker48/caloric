@@ -13,7 +13,9 @@ module.exports = function(config){
             'bower_components/angular-lodash/angular-lodash.js',
             'bower_components/angular-daterangepicker/js/angular-daterangepicker.js',
             'bower_components/alertify.js/lib/alertify.js',
-            'caloric/static/app/js/**/*.js',
+            'caloric/static/app/js/*.js',
+            'caloric/static/app/js/controllers/module.js',
+            'caloric/static/app/js/controllers/*.js',
             'caloric/tests/js/unit/**/*.js'
         ],
 
