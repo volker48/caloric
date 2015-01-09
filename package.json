@@ -1,10 +1,10 @@
 {
   "name": "marcus-mccurdy",
   "version": "0.0.0",
-  "description": "Toptal test project",
+  "description": "Caloric calorie counting app",
   "repository": {
     "type": "git",
-    "url": "git@git.toptal.com:Marcus-McCurdy/marcus-mccurdy.git"
+    "url": "git@github.com:volker48/caloric.git"
   },
   "author": "Marcus McCurdy",
   "license": "MIT",

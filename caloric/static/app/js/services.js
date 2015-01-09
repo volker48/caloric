@@ -53,6 +53,7 @@ caloricServices.factory('Login', ['$http', '$window', '$rootScope', '$log', 'AUT
                 $rootScope.$broadcast(AUTH_EVENTS.loginSuccess, user);
             }).error(function(resp) {
                 $rootScope.$broadcast(AUTH_EVENTS.loginFailure, resp);
+                alertify.error('Invalid username/password!');
             });
 
         };
